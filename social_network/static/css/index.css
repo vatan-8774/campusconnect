@@ -4,30 +4,45 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
-    background-color: #f2f2f2; /* Light gray background */
+    background-color: lightblue /* Light gray background */
 }
 
-/* Style the form container */
-form {
-    margin: 100px auto; /* Center the form */
-    max-width: 400px;
+/* Style the container to hold image and form */
+.container {
+    display: flex;
+    justify-content: space-around; /* Distribute space around elements */
+    align-items: center; /* Vertically align elements */
+    
+}
+
+/* Style the left side containing the image */
+.left {
+    flex: 1; /* Occupy 1 part of the available space */
+    text-align: center; /* Center-align the image */
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff; /* White background */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    
 }
 
+img{
+    width: 520px;
+}
+
+/* Style the right side containing the form and text */
+.right {
+    flex: 1; /* Occupy 1 part of the available space */
+    text-align: left; /* Align text and form to the left */
+    padding: 30px;
+    margin-left: 60px;
+}
 
 /* Center-align the input fields */
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-    width: 80%;
-    padding: 10px;
+    width: 90%;
+    padding: 4px; /* Increased padding for better appearance */
     border: 1px solid #ccc;
-    border-radius: 1px;
-    margin: 0 auto;
+    border-radius: 5px;
     margin-bottom: 15px;
 }
 
@@ -49,8 +64,6 @@ input[type="submit"]:hover {
 
 /* Center-align the form */
 form {
-    text-align: center;
-    margin: 0 auto;
     max-width: 400px;
     padding: 30px;
     border: 1px solid #ccc;
@@ -74,4 +87,15 @@ label {
 form label, form input {
     display: block;
     margin-bottom: 10px;
+}
 
+/* Style the "already have an account?" link */
+p a {
+    color: #007BFF; /* Link color */
+    text-decoration: none; /* Remove underlines */
+}
+
+/* Hover effect for the link */
+p a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}

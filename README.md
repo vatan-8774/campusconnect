@@ -1,5 +1,5 @@
 # campusconnect
-Campus Social Network
+## Campus Social Network
 Welcome to the Campus Social Network project! This platform is designed to connect students on campus, allowing them to interact, share information, and build a vibrant campus community.
 
 Getting Started

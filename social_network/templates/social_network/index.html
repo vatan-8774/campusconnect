@@ -1,41 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>CampusConnect - Sign Up</title>
-    <style>
-        /* Add some basic CSS styles for layout */
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-        form {
-            margin: 0 auto;
-            max-width: 400px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        label, input {
-            display: block;
-            margin-bottom: 10px;
-        }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        input[type="submit"] {
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+
 </head>
 <body>
     <h1>CampusConnect</h1>

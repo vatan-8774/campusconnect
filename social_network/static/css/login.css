@@ -4,7 +4,11 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
-    background-color: lightblue /* Light gray background */
+    background-image: url('/static/images/campus.png'); /* Updated path */
+    background-size: cover; /* Make the background image cover the entire screen */
+    background-repeat: no-repeat; /* Prevent image repetition */
+
+
 }
 
 /* Style the container to hold image and form */

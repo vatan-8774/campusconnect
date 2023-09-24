@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>CampusConnect - Sign Up</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 <body>
     
@@ -16,25 +18,31 @@
             <h1>CampusConnect</h1>
             <p>For VIU staff and students</p>
 
-            <form action="" method="post">
+            <form action="{% url 'signup' %}" method="post" class="custom-form">
+                {% csrf_token %}
                 <h2>Sign Up</h2>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-    
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-    
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-    
-                <label for="confirm_password">Confirm Password:</label>
-                <input type="password" id="confirm_password" name="confirm_password" required>
-    
-                <input type="submit" value="Sign Up">
-    
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input class="form-control" autofocus type="text" id="username" name="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input class="form-control" type="email" id="email" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input class="form-control" type="password" id="password" name="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input class="form-control" type="password" id="confirm_password" name="confirmation" placeholder="Confirm Password" required>
+                </div>
+                <input class="btn btn-primary" type="submit" value="Sign Up">
+                
                 <!-- Add "already have an account? login here" link -->
                 <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
             </form>
+            
         </div>
     </div>
 </body>

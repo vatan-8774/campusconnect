@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>CampusConnect - Log in</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 <body>
     
@@ -16,19 +18,23 @@
             <h1>CampusConnect</h1>
             <p>For VIU staff and students</p>
 
-            <form action="" method="post">
-                <h2>Log in</h2>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-    
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-    
-                <input type="submit" value="Log in">
-    
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input autofocus class="form-control" type="text" name="username" id="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input class="form-control" type="password" name="password" id="password" placeholder="Password" required>
+                </div>
+                <button class="btn btn-primary" type="submit">Login</button>
                 <!-- Add "already have an account? login here" link -->
-                <p>Dont have an account ? <a href="{% url 'signup' %}">Signup here</a></p>
+             <p>Dont have an account ? <a href="{% url 'signup' %}">Signup here</a></p>
             </form>
+            
+             
         </div>
     </div>
 </body>

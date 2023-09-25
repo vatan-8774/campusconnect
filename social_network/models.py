@@ -12,13 +12,13 @@ class User(AbstractUser):
     # Add related_name attributes to avoid clashes
     groups = models.ManyToManyField(
         'auth.Group',
-        related_name='custom_user_set',  # Change this to a unique name
+        related_name='group_permissions',  # Change this to a unique name
         blank=True,
         help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
     )
     user_permissions = models.ManyToManyField(
         'auth.Permission',
-        related_name='custom_user_set',  # Change this to a unique name
+        related_name='user_permissions',  # Change this to a unique name
         blank=True,
         help_text='Specific permissions for this user.',
     )

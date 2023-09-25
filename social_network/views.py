@@ -40,9 +40,12 @@ def login_view(request):
 
         return render(request, "social_network/login.html", {'csrf_token': csrf.get_token(request)})
 
+
+
 def signup(request):
     if request.method == "POST":
         
+        # Takes in the user username and email submitted in the signup form
         username = request.POST["username"]
         email = request.POST["email"]
 

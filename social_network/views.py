@@ -15,10 +15,12 @@ from .models import User
 
 
 def index(request):
-    return render(request, "social_network/index.html")
+    user = request.user
+    return render(request, 'social_network/index.html', {'user': user})
+
+
 
 def login_view(request):
-
     if request.method == "POST":
         # Attempt to sign user in
         username = request.POST["username"]
@@ -40,6 +42,7 @@ def login_view(request):
 
 def signup(request):
     if request.method == "POST":
+        
         username = request.POST["username"]
         email = request.POST["email"]
 
@@ -60,7 +63,7 @@ def signup(request):
                 "message": "Username already taken."
             })
         login(request, user)
-        return HttpResponseRedirect(reverse("index"))
+        return render(request, 'social_network/index.html')
     else:
         return render(request, "social_network/signup.html", {'csrf_token': csrf.get_token(request)})
 

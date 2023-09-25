@@ -10,9 +10,17 @@
 </head>
 <body>
 
-    {% if message %}
-        <div>{{ message }}</div>
-    {% endif %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="row-md-6">
+                {% if message %}
+                    <div class="alert alert-danger text-center" role="alert">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
     
     <div class="container">
         <div class="left">

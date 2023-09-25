@@ -11,13 +11,32 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 import datetime
 from django.contrib import messages
+from .models import User
 
 
 def index(request):
     return render(request, "social_network/index.html")
 
-def login(request):
-    return render(request, "social_network/login.html")
+def login_view(request):
+
+    if request.method == "POST":
+        # Attempt to sign user in
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+
+        # Check if authentication successful
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
+
+        else:
+            return render(request, "social_network/login.html", {
+                "message": "Invalid username and/or password."
+            })
+    else:
+
+        return render(request, "social_network/login.html", {'csrf_token': csrf.get_token(request)})
 
 def signup(request):
     if request.method == "POST":

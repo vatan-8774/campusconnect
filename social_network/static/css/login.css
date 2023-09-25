@@ -99,9 +99,9 @@ form label, form input {
     margin-bottom: 10px;
 }
 
-/* Style the "already have an account?" link */
+/* Style the "dont have an account?" link */
 p a {
-    color: #007BFF; /* Link color */
+    color: #ff6a00; /* Link color */
     text-decoration: none; /* Remove underlines */
 }
 

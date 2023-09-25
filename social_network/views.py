@@ -1,5 +1,17 @@
 # social_network/views.py
+from django.contrib.auth import authenticate, login, logout
+from django.db import IntegrityError
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
+from django.shortcuts import redirect
+from django.middleware import csrf
+from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
+import datetime
+from django.contrib import messages
+
 
 def index(request):
     return render(request, "social_network/index.html")
@@ -8,7 +20,29 @@ def login(request):
     return render(request, "social_network/login.html")
 
 def signup(request):
-    return render(request, "social_network/signup.html")
+    if request.method == "POST":
+        username = request.POST["username"]
+        email = request.POST["email"]
 
+        # Ensure password matches confirmation
+        password = request.POST["password"]
+        confirmation = request.POST["confirmation"]
+        if password != confirmation:
+            return render(request, "social_network/signup.html", {
+                "message": "Passwords must match."
+            })
+
+        # Attempt to create new user
+        try:
+            user = User.objects.create_user(username, email, password)
+            user.save()
+        except IntegrityError:
+            return render(request, "social_network/signup.html", {
+                "message": "Username already taken."
+            })
+        login(request, user)
+        return HttpResponseRedirect(reverse("index"))
+    else:
+        return render(request, "social_network/signup.html", {'csrf_token': csrf.get_token(request)})
 
 # Create your views here.

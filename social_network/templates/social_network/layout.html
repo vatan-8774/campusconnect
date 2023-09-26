@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CampusConnect - Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/layout.css' %}">
+    <!-- Add Bootstrap CSS link here -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body style = "background-color: #b3b3b3;">
+
+
+    <!-- Bootstrap row -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 text-left">
+                <h1 style="font-weight: bold; font-size: 20px; font-family: 'Canva Sans'; color: rgb(252, 250, 250); margin-top: 15px;
+                            text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;">
+                    Welcome, {{ user.username }}</h1>
+            </div>
+            <div class="col-md-6 text-right">
+                <h1 style="font-weight: bold; font-size: 30px; font-family: 'Canva Sans'; color: rgb(252, 250, 250); margin-top: 10px;
+                            text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;">
+                    CampusConnect</h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background color container -->
+    <div class="background-color"></div>
+
+    
+
+</body>
+</html>

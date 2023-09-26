@@ -1,0 +1,10 @@
+/* Apply a background image to create the banner */
+body {
+    background-image: url('/static/images/banner.png');
+    background-size: 100%; /* Set the background size */
+    background-repeat: no-repeat;
+    margin-bottom: 0; /* Remove body margin to prevent unwanted spacing */
+    padding: 0; /* Remove body padding to prevent unwanted spacing */
+}
+
+

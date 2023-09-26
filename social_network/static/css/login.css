@@ -101,7 +101,7 @@ form label, form input {
 
 /* Style the "dont have an account?" link */
 p a {
-    color: #ff6a00; /* Link color */
+    color: #007BFF; /* Link color */
     text-decoration: none; /* Remove underlines */
 }
 

@@ -12,5 +12,13 @@ urlpatterns = [
     # URL for the login view
     path("login/", views.login_view, name="login"),
 
+    # URL for My Profile
+    path("my_profile/", views.my_profile, name="my_profile"),
+
+    # URL for Discover
+    path("discover/", views.discover, name="discover"),
+
+    # URL for Settings
+    path("settings/", views.settings, name="settings"),
     
 ]

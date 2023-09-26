@@ -30,25 +30,25 @@
 
     <div class="navbar" style="background-color: rgb(25, 23, 23); width: 180px; position: absolute; top: 63px; bottom: 0; left: 0; text-align: left;">
         <div class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{% url 'my_profile' %}" class="nav-link {% if request.path == '/my_profile/' %}active{% endif %}">
                 <i class="fas fa-user"></i>
                 My Profile
             </a>
         </div>
         <div class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{% url 'index' %}" class="nav-link {% if request.path == '/index/' %}active{% endif %}">
                 <i class="fas fa-home"></i>
                 Home
             </a>
         </div>
         <div class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{% url 'discover' %}" class="nav-link {% if request.path == '/discover/' %}active{% endif %}">
                 <i class="fas fa-compass"></i>
                 Discover
             </a>
         </div>
         <div class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{% url 'settings' %}" class="nav-link {% if request.path == '/settings/' %}active{% endif %}">
                 <i class="fas fa-cog"></i>
                 Settings
             </a>
@@ -58,6 +58,7 @@
             <p style="font-size: 12px; color: white;">&copy; 2023 CampusConnect</p>
         </div>
     </div>
+    
 
     <!-- content -->
     <div class="content" style="background-color: rgb(251, 245, 245); width: 800px; position: absolute; top: 95px; left: 17%; bottom: 0;"></div>

@@ -39,3 +39,9 @@ body {
     color: rgb(49, 91, 153);
     font-size: 1.2rem; /* Increase font size on hover */
 }
+
+/* Add this rule to make active links pink */
+.nav-link.active {
+    color: rgb(49, 91, 153);
+    /* You can customize this style further if needed */
+}

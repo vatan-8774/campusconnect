@@ -21,7 +21,14 @@ def index(request):
     return render(request, 'social_network/index.html', {'user': user})
 
 
+def my_profile(request):
+    return render(request, 'social_network/my_profile.html')
 
+def discover(request):
+    return render(request, 'social_network/discover.html')
+
+def settings(request):
+    return render(request, 'social_network/settings.html')
 
 
 def login_view(request):

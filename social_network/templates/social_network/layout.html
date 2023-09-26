@@ -3,8 +3,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CampusConnect - Sign Up</title>
+    <title> {% block title %}CampusConnect{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
     <!-- Add Bootstrap CSS link here -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
@@ -26,11 +28,36 @@
         </div>
     </div>
 
-    <!-- Navigation bar -->
-    <div class="navbar" style="background-color: rgb(25, 23, 23); width: 180px; position: absolute; top: 63px; bottom: 0;"></div>
+    <div class="navbar" style="background-color: rgb(25, 23, 23); width: 180px; position: absolute; top: 63px; bottom: 0;">
+        <div class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fas fa-user"></i>
+                My Profile
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fas fa-home"></i>
+                Home
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fas fa-compass"></i>
+                Discover
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fas fa-cog"></i>
+                Settings
+            </a>
+        </div>
+    </div>
+    
 
     <!-- content -->
-    <div class="content" style="background-color: white; width: 800px; position: absolute; top: 95px; left: 17%; bottom: 0;">Layout.html</div>
+    <div class="content" style="background-color: rgb(251, 245, 245); width: 800px; position: absolute; top: 95px; left: 17%; bottom: 0;"></div>
 
     <!-- Sponsored ads with black border -->
     <div class="sponsored-ads" style="background-color: rgb(235, 214, 214); text-align: center; width: 200px; position: absolute; top: 95px; left: 82%; bottom: 35px; border: 5px solid black;">Sponsored Ads</div>

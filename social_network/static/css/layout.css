@@ -7,4 +7,35 @@ body {
     padding: 0; /* Remove body padding to prevent unwanted spacing */
 }
 
+/* Style the navigation links */
+.navbar .nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Push the links to the left */
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide any overflow */
+    
+    
+}
 
+.navbar .nav-link {
+    text-decoration: none;
+    color: white;
+    font-family: 'Canva Sans', sans-serif;
+    font-weight: bold;
+    font-size: 1.0rem; /* Reduce font size */
+    transition: color 0.3s, font-size 0.3s;
+    display: flex;
+    align-items: center;
+    max-width: 80%; /* Limit the maximum width of the link */
+}
+
+.navbar .nav-link i {
+    margin-right: 0.5rem; /* Reduce spacing between icon and text */
+}
+
+/* Hover effect */
+.navbar .nav-link:hover {
+    color: rgb(49, 91, 153);
+    font-size: 1.2rem; /* Increase font size on hover */
+}

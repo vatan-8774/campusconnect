@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.contrib.auth.hashers import check_password
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.middleware import csrf
@@ -10,6 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 import datetime
+import logging
 from django.contrib import messages
 from .models import User
 
@@ -20,13 +22,16 @@ def index(request):
 
 
 
+
+
 def login_view(request):
+
     if request.method == "POST":
         # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
-        
+
         # Check if authentication successful
         if user is not None:
             login(request, user)
@@ -39,7 +44,6 @@ def login_view(request):
     else:
 
         return render(request, "social_network/login.html", {'csrf_token': csrf.get_token(request)})
-
 
 
 def signup(request):

@@ -12,6 +12,9 @@ urlpatterns = [
     # URL for the login view
     path("login/", views.login_view, name="login"),
 
+    # URL for the logout view
+    path("logout_view/", views.logout_view, name="logout_view"),
+
     # URL for My Profile
     path("my_profile/", views.my_profile, name="my_profile"),
 

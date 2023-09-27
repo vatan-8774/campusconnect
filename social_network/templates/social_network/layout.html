@@ -18,7 +18,7 @@
             <div class="col-md-6 text-left">
                 <h1 style="font-weight: bold; font-size: 20px; font-family: 'Canva Sans'; color: rgb(252, 250, 250); margin-top: 15px;
                             text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;">
-                    Welcome, {{ user.username }}</h1>
+                    Welcome, @{{ user.username }}</h1>
             </div>
             <div class="col-md-6 text-right">
                 <h1 style="font-weight: bold; font-size: 30px;  color: rgb(252, 250, 250); margin-top: 10px;
@@ -76,101 +76,48 @@
         </div>
         
         <!-- Add your content here -->
-        <div style="overflow-y: auto; height: calc(100% - 2.5rem); padding: 20px; margin: 10px;">
-            <h1>Welcome to CampusConnect - Your Campus Social Network!</h1>
+        <!-- Add your content here -->
+        <div class="main-content" style="overflow-y: auto; height: calc(100% - 2.5rem); padding: 20px; margin: 10px;">
+            {% block main_content %}
+                {% if show_content %} 
+                    <h1>Welcome to CampusConnect @{{ user.username }}- Your Campus Social Network!</h1>
 
-<p>Welcome to the Campus Social Network project! This platform is designed to connect students on campus, allowing them to interact, share information, and build a vibrant campus community.</p>
+                    <p>CampusConnect is an online social directory for discovering staff and students and VIU </p>
+                    <h2>Why CampusConnect?</h2>
 
-<h2>Getting Started</h2>
+                    <p>Campus life can be exciting and diverse, but it can also be challenging to navigate, especially for new students. CampusConnect aims to bridge this gap by providing a platform that brings students together, fostering connections, and making it easier for them to:</p>
 
-<p>These instructions will help you set up and run the project on your local machine for development and testing purposes. You can also deploy it to a live system.</p>
+                    <ul>
+                        <li><strong>Connect:</strong> Meet and connect with fellow students who share similar interests, courses, or activities.</li>
 
-<h3>Prerequisites</h3>
+                        <li><strong>Share Information:</strong> Share important information, updates, and resources related to campus events, clubs, and organizations.</li>
 
-<p>Before you begin, ensure you have met the following requirements:</p>
+                        <li><strong>Discover New Things:</strong> Explore and discover new opportunities, events, and experiences happening on campus.</li>
+                    </ul>
 
-<ol>
-    <li><strong>Python:</strong> Ensure that Python is installed on your computer, and it should be version 3.7 or higher. If you don't have Python installed, you can download it from the official website: <a href="https://www.python.org/downloads/">Python Downloads</a>.</li>
+                    <h2>Navigating CampusConnect</h2>
 
-    <li><strong>Django:</strong> Django is the web framework used for this project. You can install Django using pip, which typically comes with your Python installation. Open your terminal or command prompt and run:</li>
-</ol>
+                    <p>Navigating CampusConnect is simple and intuitive. Here's a quick guide to get you started:</p>
 
-<pre>
-<code>pip install django</code>
-</pre>
+                    <ul>
+                        <li><strong>My Profile:</strong> Click on "My Profile" to access and edit your personal profile information. You can also view your posts and interactions here.</li>
 
-<ol start="3">
-    <li><strong>Git:</strong> Git is a version control system. If you don't have Git installed, you can download it from the official website: <a href="https://git-scm.com/downloads/">Git Downloads</a>.</li>
-</ol>
+                        <li><strong>Home:</strong> The "Home" page is your central hub for campus-related updates and posts. You can browse recent posts, events, and announcements from your fellow students.</li>
 
-<h3>Cloning the Repository</h3>
+                        <li><strong>Discover:</strong> Click on "Discover" to explore and discover new Users, clubs, events, and opportunities available on campus.</li>
 
-<p>To get started with the project, follow these steps:</p>
+                        <li><strong>Settings:</strong> Access your account settings by clicking on "Settings." Here, you can manage your account preferences and notification settings.</li>
+                    </ul>
 
-<ol>
-    <li>Open your terminal or command prompt.</li>
-    <li>Navigate to the directory where you want to store the project.</li>
-    <li>Use the following command to clone the project's repository:</li>
-</ol>
+                    <!-- Continue with the rest of your content -->
 
-<pre>
-<code>git clone https://github.com/ninijoe/campusconnect</code>
-</pre>
-
-<ol start="4">
-    <li>After cloning the repository, create a new branch to work on your changes. It's important not to work on the main branch to avoid disrupting the workflow. You can create a new branch with a name of your choice using the following command:</li>
-</ol>
-
-<pre>
-<code>git checkout -b your-branch-name</code>
-</pre>
-
-<p>Make sure to replace <code>your-branch-name</code> with a descriptive name for your branch.</p>
-
-<ol start="5">
-    <li>To confirm that you are on your newly created branch, you can run:</li>
-</ol>
-
-<pre>
-<code>git branch</code>
-</pre>
-
-<p>Now, you're ready to start developing and contributing to the project. If you have any questions or need guidance on development, feel free to reach out to the project maintainers.</p>
-
-<h3>Running the Project</h3>
-
-<p>Once you have successfully cloned the repository and created your branch, follow these steps to run the project on your local machine:</p>
-
-<ol>
-    <li>Navigate to the project directory:</li>
-</ol>
-
-<pre>
-<code>cd campusconnect</code>
-</pre>
-
-<ol start="2">
-    <li>Run the following command to start the development server:</li>
-</ol>
-
-<pre>
-<code>python manage.py runserver</code>
-</pre>
-
-<p>Replace <code>python</code> with your specific Python version if necessary.</p>
-
-<ol start="3">
-    <li>After running the command, you should see output indicating that the development server is running. By default, the project will be accessible at <a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a> in your web browser.</li>
-</ol>
-
-<p>You're now ready to explore, develop, and test the CampusConnect project locally. If you encounter any issues or have questions, don't hesitate to ask for assistance. Happy coding!</p>
-
+                {% endif %}
+            {% endblock %}
         </div>
+
     </div>
-    
 
     <!-- Sponsored ads with a black border -->
-    <div class="sponsored-ads" style="background-color: rgb(235, 214, 214); text-align: center; width: 200px; position: absolute; top: 95px; left: 82%; bottom: 35px; border: 5px solid black;">Sponsored Ads</div>
-
+    <div class="sponsored-ads" style="background-color: rgb(235, 214, 214); text-align: center; width: 200px; position: absolute; top: 95px; left: 82%; bottom: 35px; border: 1.5px solid black;">Sponsored Ads</div>
 </body>
 </html>

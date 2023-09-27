@@ -9,6 +9,7 @@ from django.shortcuts import redirect
 from django.middleware import csrf
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 import datetime
 import logging
@@ -17,8 +18,18 @@ from .models import User
 
 @login_required
 def index(request):
-    user = request.user
-    return render(request, 'social_network/index.html', {'user': user})
+    show_signup_content = not request.user.is_authenticated
+
+    if request.method == "POST":
+        # Handle user signup
+        # ...
+
+        # Log the user in after signup
+        login(request, user)
+        show_signup_content = False  # After signup, don't show signup content
+
+    return render(request, 'social_network/index.html', {'show_signup_content': show_signup_content})
+
 
 
 def my_profile(request):
@@ -53,9 +64,15 @@ def login_view(request):
         return render(request, "social_network/login.html", {'csrf_token': csrf.get_token(request)})
 
 
+def logout_view(request):
+    logout(request)
+    return render(request, "social_network/login.html", {'csrf_token': csrf.get_token(request)})
+
+
+
+@csrf_exempt  # You may need to exempt CSRF protection for this view
 def signup(request):
     if request.method == "POST":
-        
         # Takes in the user username and email submitted in the signup form
         username = request.POST["username"]
         email = request.POST["email"]
@@ -68,7 +85,7 @@ def signup(request):
                 "message": "Passwords must match."
             })
 
-        # Attempt to create new user
+        # Attempt to create a new user
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
@@ -76,9 +93,13 @@ def signup(request):
             return render(request, "social_network/signup.html", {
                 "message": "Username already taken."
             })
+        
+        # Log the user in
         login(request, user)
-        return render(request, 'social_network/index.html')
+
+        # Render the index page with the specified content
+        return render(request, 'social_network/index.html', {
+            "show_content": True  # Add this context variable
+        })
     else:
         return render(request, "social_network/signup.html", {'csrf_token': csrf.get_token(request)})
-
-# Create your views here.

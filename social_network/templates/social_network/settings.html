@@ -1,10 +1,13 @@
 {% extends "social_network/layout.html" %}
 
-{% block body %}
-<div class="content" style="background-color: rgb(251, 245, 245); width: 800px; position: absolute; top: 95px; left: 17%; bottom: 0;">
-    <!-- Your content goes here -->
+
+{% block main_content %}
+    <!-- Your existing content goes here -->
+
+    <a href="{% url 'logout_view' %}" class="btn btn-danger">Logout</a>
 </div>
 {% endblock %}
+
 
 {% block nav_home_active %}
     active

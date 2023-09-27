@@ -36,7 +36,7 @@ body {
 
 /* Hover effect */
 .navbar .nav-link:hover {
-    color: rgb(49, 91, 153);
+    color: rgb(107, 147, 205);
     font-size: 1.2rem; /* Increase font size on hover */
 }
 

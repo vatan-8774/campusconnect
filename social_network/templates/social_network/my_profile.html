@@ -1,11 +1,72 @@
 {% extends "social_network/layout.html" %}
 
-{% block body %}
-<div class="content" style="background-color: rgb(251, 245, 245); width: 800px; position: absolute; top: 95px; left: 17%; bottom: 0;">
-    <!-- Your content goes here -->
-</div>
-{% endblock %}
+{% load static %}
 
-{% block nav_home_active %}
-    active
+{% block main_content %}
+<div class="content" style="background-color: rgb(251, 245, 245); width: 1000px; position: absolute; top: 95px; left: 10%; bottom: 0; overflow-y: auto;">
+    
+    <div class="row mb-5">
+        <!-- Profile Photo Upload -->
+        <div class="col-md-4">
+            <div class="profile-photo text-center">
+                <div class="profile-photo-container" style="border: 2px dashed #ccc; padding: 160px; text-align: center; display: flex; align-items: center; justify-content: center;">
+                    <label for="profile-photo-upload" class="edit-profile-photo">
+                        <i class="fas fa-plus fa-3x"></i>
+                    </label>
+                    <input type="file" id="profile-photo-upload" style="display: none;">
+                </div>
+            </div>
+        </div>
+
+        <!-- User Information -->
+        <div class="col-md-8">
+            <div class="user-info">
+                <h3 style="color: rgb(0, 110, 255);">@{{user.username}}</h3>
+                <form>
+                    <!-- Existing form fields -->
+                    <!-- ... -->
+
+                    <!-- Additional rows for Gender, Birthday, and Interests -->
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" name="first-name" value="John" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" name="last-name" value="Doe" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="major">Major</label>
+                        <input type="text" id="major" name="major" value="Computer Science" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="pronouns">Pronouns</label>
+                        <input type="text" id="pronouns" name="pronouns" value="He/Him" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <input type="text" id="gender" name="gender" value="Male" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthday">Birthday</label>
+                        <input type="text" id="birthday" name="birthday" value="January 1, 1990" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="button" class="btn btn-secondary edit-user-info">Edit</button>
+                        <button type="button" class="btn btn-primary save-user-info">Save</button>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<style>
+    /* Add CSS for hover effect */
+    .edit-profile-photo:hover i {
+        color: blue;
+    }
+</style>
 {% endblock %}

@@ -23,5 +23,9 @@ urlpatterns = [
 
     # URL for Settings
     path("settings/", views.settings, name="settings"),
+
+    path("update_profile/", views.update_profile, name="update_profile"),
+
+
     
 ]

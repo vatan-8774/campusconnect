@@ -21,45 +21,51 @@
         <div class="col-md-8">
             <div class="user-info">
                 <h3 style="color: rgb(0, 110, 255);">@{{user.username}}</h3>
-                <form>
+                <form method="post" action="{% url 'my_profile' %}"">
+                    {% csrf_token %}
                     <!-- Existing form fields -->
                     <div class="form-group">
                         <label for="first-name">First Name</label>
-                        <input type="text" id="first-name" name="first-name" value="John" disabled>
+                        <input type="text" id="first-name" name="first-name" value="{{ user.first_name }}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="last-name">Last Name</label>
-                        <input type="text" id="last-name" name="last-name" value="Doe" disabled>
+                        <input type="text" id="last-name" name="last-name" value="{{ user.last_name }}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="gender">Gender</label>
-                        <input type="text" id="gender" name="gender" value="Male" disabled>
+                        <input type="text" id="gender" name="gender" value="{{ user.gender }}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="department">Department</label>
-                        <input type="text" id="department" name="department" value="Computer Science" disabled>
+                        <input type="text" id="department" name="department" value="{{ user.department }}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="birthday">Birthday</label>
-                        <input type="text" id="birthday" name="birthday" value="January 1, 1990" disabled>
+                        <input type="text" id="birthday" name="birthday" value="{{ user.birthday }}" disabled>
                     </div>
                     <!-- Add other form fields here -->
 
-                    <div class="form-group">
-                        <button type="button" class="btn btn-secondary edit-user-info">Edit</button>
-                        <button type="button" class="btn btn-primary save-user-info">Save</button>
-                    </div>
+                    <form method="post" action="{% url 'update_profile' %}">
+                        {% csrf_token %}
+                        <input type="hidden" id="user-id" name="user-id" value="{{ user.id }}">
+                    
+                        <!-- ... (other form fields) ... -->
+                        <div class="form-group">
+                            <button type="button" class="btn btn-secondary edit-user-info">Edit</button>
+                            <button type="submit" class="btn btn-primary save-user-info">Save</button>
+                        </div>
+                    </form>
 
-                    <!-- Following and Followers sections -->
-                    <div class="following-followers">
+                    <!-- <div class="following-followers">
                         <div class="following">
                             <strong>Following:</strong> 100
                         </div>
                         <div class="followers">
                             <strong>Followers:</strong> 200
                         </div>
-                    </div>
-                </form>
+                    </div> -->
+                    
             </div>
         </div>
     </div>
@@ -97,6 +103,32 @@
         </ul>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const editButton = document.querySelector(".edit-user-info");
+        const saveButton = document.querySelector(".save-user-info");
+        const formFields = document.querySelectorAll("form input[type='text']");
+
+        let editMode = false;
+
+        editButton.addEventListener("click", function () {
+            editMode = !editMode;
+            formFields.forEach((field) => {
+                field.disabled = !editMode;
+            });
+
+            if (editMode) {
+                editButton.style.display = "none";
+                saveButton.style.display = "inline-block";
+            } else {
+                editButton.style.display = "inline-block";
+                saveButton.style.display = "none";
+            }
+        });
+    });
+</script>
+
 
 <style>
     /* Add CSS for hover effect */

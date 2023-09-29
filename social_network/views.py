@@ -13,8 +13,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 import datetime
 import logging
+from django.db.models import F
 from django.contrib import messages
 from .models import User
+from datetime import datetime
 
 @login_required
 def index(request):
@@ -32,8 +34,73 @@ def index(request):
 
 
 
+@login_required
 def my_profile(request):
+    if request.method == "POST":
+        print(request.POST)
+        # Get the current user
+        user = request.user
+
+        # Update the user fields based on form input, but only if a value is provided
+        if request.POST.get("first-name") is not None:
+            user.first_name = request.POST.get("first-name")
+        if request.POST.get("last-name") is not None:
+            user.last_name = request.POST.get("last-name")
+        if request.POST.get("gender") is not None:
+            user.gender = request.POST.get("gender")
+        if request.POST.get("department") is not None:
+            user.department = request.POST.get("department")
+        if request.POST.get("birthday") is not None:
+            user.birthday = request.POST.get("birthday")
+
+        # Save the user object
+        user.save()
+        return render(request, 'social_network/my_profile.html')
     return render(request, 'social_network/my_profile.html')
+
+
+@login_required
+def update_profile(request):
+    if request.method == 'POST':
+        user_id = request.POST.get('user-id')
+        new_first_name = request.POST.get('first-name')
+        new_last_name = request.POST.get('last-name')
+        new_gender = request.POST.get('gender')
+        new_department = request.POST.get('department')
+        new_birthday = request.POST.get('birthday')
+
+        try:
+            user = User.objects.get(id=user_id)  # Use User model here
+
+            # Update fields if new values are provided
+            if new_first_name is not None:
+                user.first_name = new_first_name
+            if new_last_name is not None:
+                user.last_name = new_last_name
+            if new_gender is not None:
+                user.gender = new_gender
+            if new_department is not None:
+                user.department = new_department
+
+            # Handle the birthday field
+            if new_birthday is not None:
+                if new_birthday.lower() == 'none':
+                    user.birthday = None
+                else:
+                    user.birthday = datetime.strptime(new_birthday, "%Y-%m-%d").date()
+
+            # Save the updated user object
+            user.save()
+
+            return redirect("my_profile")
+
+        except User.DoesNotExist:
+            # Handle the case where the user does not exist
+            pass
+
+    # Handle other cases or return an error response if needed
+    return render(request, 'error.html')
+
 
 def discover(request):
     return render(request, 'social_network/discover.html')

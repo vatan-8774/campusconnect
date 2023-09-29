@@ -62,32 +62,44 @@ def my_profile(request):
 @login_required
 def update_profile(request):
     if request.method == 'POST':
-        user_id = request.POST.get('user-id')
-        new_first_name = request.POST.get('first-name')
-        new_last_name = request.POST.get('last-name')
-        new_gender = request.POST.get('gender')
-        new_department = request.POST.get('department')
-        new_birthday = request.POST.get('birthday')
+        user_id = request.POST.get('user-id', '')
+        new_first_name = request.POST.get('first-name', '')
+        new_last_name = request.POST.get('last-name', '')
+        new_gender = request.POST.get('gender', '')
+        new_department = request.POST.get('department', '')
+        new_birthday = request.POST.get('birthday', '')
 
         try:
             user = User.objects.get(id=user_id)  # Use User model here
 
             # Update fields if new values are provided
-            if new_first_name is not None:
+            if new_first_name:
                 user.first_name = new_first_name
-            if new_last_name is not None:
+            if new_last_name:
                 user.last_name = new_last_name
-            if new_gender is not None:
+            if new_gender:
                 user.gender = new_gender
-            if new_department is not None:
+            if new_department:
                 user.department = new_department
 
             # Handle the birthday field
-            if new_birthday is not None:
-                if new_birthday.lower() == 'none':
-                    user.birthday = None
-                else:
-                    user.birthday = datetime.strptime(new_birthday, "%Y-%m-%d").date()
+            if new_birthday.lower() == 'none':
+                user.birthday = None
+            elif new_birthday:
+                try:
+                    # Attempt to parse the date using multiple formats
+                    user.birthday = datetime.datetime.strptime(new_birthday, "%Y-%m-%d").date()
+                except ValueError:
+                    try:
+                        user.birthday = datetime.datetime.strptime(new_birthday, "%d/%m/%Y").date()
+                    except ValueError:
+                        try:
+                            user.birthday = datetime.datetime.strptime(new_birthday, "%d-%m-%Y").date()
+                        except ValueError:
+                            try:
+                                user.birthday = datetime.datetime.strptime(new_birthday, "%B %d, %Y").date()
+                            except ValueError:
+                                pass
 
             # Save the updated user object
             user.save()
@@ -100,6 +112,7 @@ def update_profile(request):
 
     # Handle other cases or return an error response if needed
     return render(request, 'error.html')
+
 
 
 def discover(request):

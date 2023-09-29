@@ -21,6 +21,11 @@
         <div class="col-md-8">
             <div class="user-info">
                 <h3 style="color: rgb(0, 110, 255);">@{{user.username}}</h3>
+                {% if message %}
+                    <div class="alert alert-danger text-center" role="alert">
+                        {{ message }}
+                    </div>
+                {% endif %}
                 <form method="post" action="{% url 'my_profile' %}"">
                     {% csrf_token %}
                     <!-- Existing form fields -->
@@ -41,9 +46,10 @@
                         <input type="text" id="department" name="department" value="{{ user.department }}" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="birthday">Birthday</label>
-                        <input type="text" id="birthday" name="birthday" value="{{ user.birthday }}" disabled>
+                        <label for="year-of-study">Year</label>
+                        <input type="text" id="year-of-study" name="year-of-study" value="{{ user.year_of_study }}" disabled>
                     </div>
+                    
                     <!-- Add other form fields here -->
 
                     <form method="post" action="{% url 'update_profile' %}">

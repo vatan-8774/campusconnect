@@ -25,7 +25,9 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=30, blank=True)
     gender = models.CharField(max_length=10, blank=True)
     department = models.CharField(max_length=50, blank=True)
-    birthday = models.DateField(null=True, blank=True)
+    year_of_study = models.CharField(max_length=10, null=True, blank=True)
+
+    
 
     def get_first_name(self):
         return self.first_name
@@ -39,5 +41,5 @@ class User(AbstractUser):
     def get_department(self):
         return self.department
     
-    def get_birthday(self):
-        return self.birthday
+    def get_year_of_study(self):
+        return self.year

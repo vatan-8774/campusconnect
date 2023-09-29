@@ -50,8 +50,11 @@ def my_profile(request):
             user.gender = request.POST.get("gender")
         if request.POST.get("department") is not None:
             user.department = request.POST.get("department")
-        if request.POST.get("birthday") is not None:
-            user.birthday = request.POST.get("birthday")
+        if request.POST.get("year-of-study") is not None:
+            user.year_of_study = request.POST.get("year-of-study")
+
+        
+        
 
         # Save the user object
         user.save()
@@ -62,56 +65,41 @@ def my_profile(request):
 @login_required
 def update_profile(request):
     if request.method == 'POST':
-        user_id = request.POST.get('user-id', '')
-        new_first_name = request.POST.get('first-name', '')
-        new_last_name = request.POST.get('last-name', '')
-        new_gender = request.POST.get('gender', '')
-        new_department = request.POST.get('department', '')
-        new_birthday = request.POST.get('birthday', '')
+        user_id = request.POST.get('user-id')
+        new_first_name = request.POST.get('first-name')
+        new_last_name = request.POST.get('last-name')
+        new_gender = request.POST.get('gender')
+        new_department = request.POST.get('department')
+        new_year_of_study = request.POST.get('year-of-study')
 
         try:
-            user = User.objects.get(id=user_id)  # Use User model here
+            user = User.objects.get(id=user_id)
 
             # Update fields if new values are provided
-            if new_first_name:
+            if new_first_name is not None:
                 user.first_name = new_first_name
-            if new_last_name:
+            if new_last_name is not None:
                 user.last_name = new_last_name
-            if new_gender:
+            if new_gender is not None:
                 user.gender = new_gender
-            if new_department:
+            if new_department is not None:
                 user.department = new_department
-
-            # Handle the birthday field
-            if new_birthday.lower() == 'none':
-                user.birthday = None
-            elif new_birthday:
-                try:
-                    # Attempt to parse the date using multiple formats
-                    user.birthday = datetime.datetime.strptime(new_birthday, "%Y-%m-%d").date()
-                except ValueError:
-                    try:
-                        user.birthday = datetime.datetime.strptime(new_birthday, "%d/%m/%Y").date()
-                    except ValueError:
-                        try:
-                            user.birthday = datetime.datetime.strptime(new_birthday, "%d-%m-%Y").date()
-                        except ValueError:
-                            try:
-                                user.birthday = datetime.datetime.strptime(new_birthday, "%B %d, %Y").date()
-                            except ValueError:
-                                pass
+            if new_year_of_study is not None:
+                user.year_of_study = new_year_of_study
+            
 
             # Save the updated user object
             user.save()
 
+            messages.success(request, "Profile updated successfully.")
             return redirect("my_profile")
 
         except User.DoesNotExist:
-            # Handle the case where the user does not exist
-            pass
+            messages.error(request, "An error occurred while updating the profile.")
 
     # Handle other cases or return an error response if needed
     return render(request, 'error.html')
+
 
 
 

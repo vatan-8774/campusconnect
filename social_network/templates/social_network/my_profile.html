@@ -6,16 +6,48 @@
 <div class="content" style="background-color: rgb(251, 245, 245); width: 1000px; position: absolute; top: 95px; left: 10%; bottom: 0; overflow-y: auto;">
     <div class="row mb-5">
         <!-- Profile Photo Upload -->
+        <!-- Profile Photo Upload -->
+        <!-- Profile Photo Upload -->
         <div class="col-md-4">
             <div class="profile-photo text-center">
                 <div class="profile-photo-container" style="border: 2px dashed #ccc; padding: 160px; text-align: center; display: flex; align-items: center; justify-content: center;">
-                    <label for="profile-photo-upload" class="edit-profile-photo">
-                        <i class="fas fa-plus fa-3x"></i>
-                    </label>
-                    <input type="file" id="profile-photo-upload" style="display: none;">
+                    {% if user.profile_photo %}
+                        <img src="{{ user.profile_photo.url }}" alt="Profile Photo">
+                    {% else %}
+                        <label for="profile-photo-upload" class="edit-profile-photo">
+                            <i class="fas fa-plus fa-3x"></i>
+                        </label>
+                        <input type="file" id="profile-photo-upload" name="profile-photo" style="display: none;">
+                    {% endif %}
                 </div>
             </div>
+            
+            <br>
+            <!-- Bio Section -->
+            <div class="bio-section">
+                <div class="form-group">
+                    <label for="bio" class="font-weight-bold">Bio</label>
+                    <p class="bio-text">{{ user.bio }}</p>
+                </div>
+                
+                <!-- Edit Bio Button -->
+                <button type="button" class="btn btn-secondary edit-bio">Edit Bio</button>
+                
+                <!-- Bio Editing Form -->
+                <form method="post" action="{% url 'update_bio' %}" class="bio-edit-form" style="display: none;">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <textarea id="bio" name="bio" rows="4" cols="50">{{ user.bio }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary save-bio">Save Bio</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
+        
+        
 
         <!-- User Information -->
         <div class="col-md-8">
@@ -29,6 +61,7 @@
                 <form method="post" action="{% url 'my_profile' %}"">
                     {% csrf_token %}
                     <!-- Existing form fields -->
+                    
                     <div class="form-group">
                         <label for="first-name">First Name</label>
                         <input type="text" id="first-name" name="first-name" value="{{ user.first_name }}" disabled>
@@ -71,89 +104,18 @@
                             <strong>Followers:</strong> 200
                         </div>
                     </div> -->
-                    
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- Wrap the following content in a div with a fixed width -->
-    <div class="welcome-text-container" style="width: 600px; margin-left: 10px;"> <!-- Adjust margin-left as needed -->
-        <h1>Welcome to CampusConnect @{{ user.username }}- Your Campus Social Network!</h1>
-
-        <p>CampusConnect is an online social directory for discovering staff and students at VIU.</p>
-
-        <h2>Why CampusConnect?</h2>
-
-        <p>Campus life can be exciting and diverse, but it can also be challenging to navigate, especially for new students. CampusConnect aims to bridge this gap by providing a platform that brings students together, fostering connections, and making it easier for them to:</p>
-
-        <ul>
-            <li><strong>Connect:</strong> Meet and connect with fellow students who share similar interests, courses, or activities.</li>
-
-            <li><strong>Share Information:</strong> Share important information, updates, and resources related to campus events, clubs, and organizations.</li>
-
-            <li><strong>Discover New Things:</strong> Explore and discover new opportunities, events, and experiences happening on campus.</li>
-        </ul>
-
-        <h2>Navigating CampusConnect</h2>
-
-        <p>Navigating CampusConnect is simple and intuitive. Here's a quick guide to get you started:</p>
-
-        <ul>
-            <li><strong>My Profile:</strong> Click on "My Profile" to access and edit your personal profile information. You can also view your posts and interactions here.</li>
-
-            <li><strong>Home:</strong> The "Home" page is your central hub for campus-related updates and posts. You can browse recent posts, events, and announcements from your fellow students.</li>
-
-            <li><strong>Discover:</strong> Click on "Discover" to explore and discover new Users, clubs, events, and opportunities available on campus.</li>
-
-            <li><strong>Settings:</strong> Access your account settings by clicking on "Settings." Here, you can manage your account preferences and notification settings.</li>
-        </ul>
-    </div>
+    
+    
+    
 </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const editButton = document.querySelector(".edit-user-info");
-        const saveButton = document.querySelector(".save-user-info");
-        const formFields = document.querySelectorAll("form input[type='text']");
-
-        let editMode = false;
-
-        editButton.addEventListener("click", function () {
-            editMode = !editMode;
-            formFields.forEach((field) => {
-                field.disabled = !editMode;
-            });
-
-            if (editMode) {
-                editButton.style.display = "none";
-                saveButton.style.display = "inline-block";
-            } else {
-                editButton.style.display = "inline-block";
-                saveButton.style.display = "none";
-            }
-        });
-    });
-</script>
 
 
-<style>
-    /* Add CSS for hover effect */
-    .edit-profile-photo:hover i {
-        color: blue;
-    }
 
-    /* Style for the welcome-text container */
-    .welcome-text-container {
-        padding: 20px;
-    }
 
-    /* Style for Following and Followers sections */
-    .following-followers {
-        margin-top: 20px;
-    }
-
-    .following, .followers {
-        margin-right: 20px;
-    }
-</style>
 {% endblock %}

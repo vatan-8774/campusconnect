@@ -21,11 +21,13 @@ class User(AbstractUser):
         help_text='Specific permissions for this user.',
     )
 
+    profile_photo = models.ImageField(upload_to='profile_photos/', null=True, blank=True)
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     gender = models.CharField(max_length=10, blank=True)
     department = models.CharField(max_length=50, blank=True)
     year_of_study = models.CharField(max_length=10, null=True, blank=True)
+    bio = models.TextField(blank=True)
 
     
 
@@ -43,3 +45,6 @@ class User(AbstractUser):
     
     def get_year_of_study(self):
         return self.year
+    
+    def get_bio(self):
+        return self.bio

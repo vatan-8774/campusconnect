@@ -17,6 +17,7 @@ from django.db.models import F
 from django.contrib import messages
 from .models import User
 from datetime import datetime
+from django.http import HttpResponseServerError
 
 @login_required
 def index(request):
@@ -40,6 +41,7 @@ def my_profile(request):
         print(request.POST)
         # Get the current user
         user = request.user
+        
 
         # Update the user fields based on form input, but only if a value is provided
         if request.POST.get("first-name") is not None:
@@ -52,7 +54,7 @@ def my_profile(request):
             user.department = request.POST.get("department")
         if request.POST.get("year-of-study") is not None:
             user.year_of_study = request.POST.get("year-of-study")
-
+        
         
         
 
@@ -86,7 +88,11 @@ def update_profile(request):
                 user.department = new_department
             if new_year_of_study is not None:
                 user.year_of_study = new_year_of_study
-            
+
+            # Handle profile photo upload
+            if 'profile-photo' in request.FILES:
+                profile_photo = request.FILES['profile-photo']
+                user.profile_photo = profile_photo  # Assuming you have a profile_photo field in your User model
 
             # Save the updated user object
             user.save()
@@ -98,8 +104,33 @@ def update_profile(request):
             messages.error(request, "An error occurred while updating the profile.")
 
     # Handle other cases or return an error response if needed
-    return render(request, 'error.html')
+    return HttpResponseServerError("Invalid request.")  # You can customize this error message
 
+
+@login_required
+def update_bio(request):
+    if request.method == 'POST':
+        user_id = request.user.id
+        new_bio = request.POST.get('bio')
+
+        try:
+            user = User.objects.get(id=user_id)
+
+            # Update the bio field if a new value is provided
+            if new_bio is not None:
+                user.bio = new_bio
+
+            # Save the updated user object
+            user.save()
+
+            messages.success(request, "Bio updated successfully.")
+            return redirect("my_profile")
+
+        except User.DoesNotExist:
+            messages.error(request, "An error occurred while updating the bio.")
+
+    # Handle other cases or return an error response if needed
+    return HttpResponseServerError("Invalid request.")  # You can customize this error message
 
 
 

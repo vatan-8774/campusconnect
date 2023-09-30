@@ -54,6 +54,24 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const profilePhotoInput = document.querySelector("#profile-photo-upload");
+        const profilePhotoPreview = document.querySelector("#profile-photo-preview");
+    
+        profilePhotoInput.addEventListener("change", function () {
+            const file = profilePhotoInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    profilePhotoPreview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const profilePhotoContainer = document.querySelector(".profile-photo-container");
     const profilePhotoInput = document.querySelector("#profile-photo-input");
@@ -67,3 +85,14 @@ document.addEventListener("DOMContentLoaded", function () {
         profilePhotoForm.submit();
     });
 });
+
+function changeProfilePhoto() {
+    document.getElementById("profile-photo").style.display = "none";
+    document.getElementById("profile-photo-upload").style.display = "block";
+    document.querySelector('.btn-secondary').style.display = "none";
+    document.querySelector('.btn-primary').style.display = "block";
+}
+
+function openFileInput() {
+    document.getElementById("profile-photo-upload").click();
+}

@@ -26,6 +26,9 @@ urlpatterns = [
 
     path("update_bio/", views.update_bio, name="update_bio"),
 
+    path("update_profile_photo/", views.update_profile_photo, name="update_profile_photo"),
+    
+    path("remove_profile_photo/", views.remove_profile_photo, name="remove_profile_photo"),
 
     # URL for the logout view
     path("logout_view/", views.logout_view, name="logout_view"),

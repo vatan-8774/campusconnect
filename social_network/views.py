@@ -64,6 +64,48 @@ def my_profile(request):
     return render(request, 'social_network/my_profile.html')
 
 
+
+@login_required
+def update_profile_photo(request):
+    if request.method == 'POST':
+        try:
+            user = request.user
+
+            # Check if 'profile-photo' is in the request.FILES
+            if 'profile-photo' in request.FILES:
+                profile_photo = request.FILES['profile-photo']
+
+                # Save the uploaded profile photo to the user's profile
+                user.profile_photo = profile_photo
+                user.save()
+
+                messages.success(request, "Profile photo updated successfully.")
+                return redirect("my_profile")
+            else:
+                messages.error(request, "No profile photo provided.")
+        except Exception as e:
+            # Log the error for debugging
+            logger.error(f"Error updating profile photo: {e}")
+            messages.error(request, "An error occurred while updating the profile photo.")
+    
+    # Redirect back to the profile page even on error
+    return redirect("my_profile")
+
+
+
+@login_required
+def remove_profile_photo(request):
+    user = request.user
+
+    # Remove the user's profile photo
+    user.profile_photo.delete(save=False)
+    user.save()
+
+    messages.success(request, "Profile photo removed successfully.")
+    return redirect("my_profile")
+
+
+
 @login_required
 def update_profile(request):
     if request.method == 'POST':

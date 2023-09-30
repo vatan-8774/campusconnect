@@ -10,17 +10,16 @@
         <!-- Profile Photo Upload -->
         <div class="col-md-4">
             <div class="profile-photo text-center">
-                <div class="profile-photo-container" style="border: 2px dashed #ccc; padding: 160px; text-align: center; display: flex; align-items: center; justify-content: center;">
+                <div class="profile-photo-container text-center">
                     {% if user.profile_photo %}
-                        <img src="{{ user.profile_photo.url }}" alt="Profile Photo">
+                        <img src="{{ user.profile_photo.url }}" alt="Profile Photo" class="img-fluid rounded-circle fa-5x" style="max-width: 100%; max-height: 100%;">
                     {% else %}
-                        <label for="profile-photo-upload" class="edit-profile-photo">
-                            <i class="fas fa-plus fa-3x"></i>
-                        </label>
-                        <input type="file" id="profile-photo-upload" name="profile-photo" style="display: none;">
+                        <!-- If there is no profile photo, display a placeholder or a default image -->
+                        <i class="fas fa-user-circle fa-10x" ></i>
                     {% endif %}
                 </div>
             </div>
+            
             
             <br>
             <!-- Bio Section -->
@@ -37,7 +36,7 @@
                 <form method="post" action="{% url 'update_bio' %}" class="bio-edit-form" style="display: none;">
                     {% csrf_token %}
                     <div class="form-group">
-                        <textarea id="bio" name="bio" rows="4" cols="50">{{ user.bio }}</textarea>
+                        <textarea id="bio" name="bio" rows="4" cols="35">{{ user.bio }}</textarea>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary save-bio">Save Bio</button>

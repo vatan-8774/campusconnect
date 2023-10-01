@@ -5,8 +5,7 @@
 {% block main_content %}
 <div class="content" style="background-color: rgb(251, 245, 245); width: 1000px; position: absolute; top: 95px; left: 10%; bottom: 0; overflow-y: auto;">
     <div class="row mb-5">
-        <!-- Profile Photo Upload -->
-        <!-- Profile Photo Upload -->
+       
         <!-- Profile Photo Upload -->
         <div class="col-md-4">
             <div class="profile-photo text-center">
@@ -35,30 +34,10 @@
                         <i class="fas fa-trash delete-icon" id="delete-icon"></i>
                     </button>
                 </form>
+                
             </div>
             
-            <br>
-            <!-- Bio Section -->
-            <div class="bio-section">
-                <div class="form-group">
-                    <label for="bio" class="font-weight-bold">Bio</label>
-                    <p class="bio-text">{{ user.bio }}</p>
-                </div>
-                
-                <!-- Edit Bio Button -->
-                <button type="button" class="btn btn-secondary edit-bio">Edit Bio</button>
-                
-                <!-- Bio Editing Form -->
-                <form method="post" action="{% url 'update_bio' %}" class="bio-edit-form" style="display: none;">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <textarea id="bio" name="bio" rows="4" cols="35">{{ user.bio }}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary save-bio">Save Bio</button>
-                    </div>
-                </form>
-            </div>
+            
 
         </div>
         
@@ -111,6 +90,8 @@
                         </div>
                     </form>
 
+                    
+
                     <!-- <div class="following-followers">
                         <div class="following">
                             <strong>Following:</strong> 100
@@ -125,6 +106,27 @@
     </div>
 
     
+    <div class="card bg-light" style="max-width: 65%;">
+        <div class="card-body">
+            <h5 class="card-title">Bio</h5>
+            <div class="card-text">
+                <p class="bio-text">{{ user.bio }}</p>
+            </div>
+            <!-- Edit Bio Button -->
+            <button type="button" class="btn btn-secondary edit-bio">Edit Bio</button>
+    
+            <!-- Bio Editing Form -->
+            <form method="post" action="{% url 'update_bio' %}" class="bio-edit-form" style="display: none;">
+                {% csrf_token %}
+                <div class="form-group">
+                    <textarea id="bio" name="bio" rows="4" class="form-control">{{ user.bio }}</textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary save-bio">Save Bio</button>
+                </div>
+            </form>
+        </div>
+    </div>
     
     
 </div>

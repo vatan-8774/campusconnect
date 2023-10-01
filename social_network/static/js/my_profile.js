@@ -54,3 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    function openFileInput() {
+        document.getElementById("profile-photo-input").click();
+    }

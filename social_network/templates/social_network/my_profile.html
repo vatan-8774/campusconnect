@@ -12,14 +12,30 @@
             <div class="profile-photo text-center">
                 <div class="profile-photo-container text-center">
                     {% if user.profile_photo %}
-                        <img src="{{ user.profile_photo.url }}" alt="Profile Photo" class="img-fluid rounded-circle fa-5x" style="max-width: 100%; max-height: 100%;">
+                        <img src="{{ user.profile_photo.url }}" alt="Profile Photo" class="img-fluid rounded-circle fa-5x" style="max-width: 100%; max-height: 100%;" id="profile-photo">
                     {% else %}
                         <!-- If there is no profile photo, display a placeholder or a default image -->
-                        <i class="fas fa-user-circle fa-10x" ></i>
+                        <i class="fas fa-user-circle fa-10x" id="profile-photo-placeholder"></i>
                     {% endif %}
                 </div>
+                <br>
+                <!-- Edit Profile Photo Form -->
+                <form method="post" action="{% url 'update_profile_photo' %}" style="display: inline;" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="file" name="profile-photo">
+                    <button type="submit" class="btn-icon" title="Edit Profile Photo">
+                        <i class="fas fa-edit edit-icon" id="edit-icon"></i>
+                    </button>
+                </form>
+
+                <!-- Delete Profile Photo Form -->
+                <form method="post" action="{% url 'remove_profile_photo' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-icon" title="Delete Profile Photo">
+                        <i class="fas fa-trash delete-icon" id="delete-icon"></i>
+                    </button>
+                </form>
             </div>
-            
             
             <br>
             <!-- Bio Section -->

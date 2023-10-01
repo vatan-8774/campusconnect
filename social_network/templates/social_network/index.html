@@ -2,7 +2,30 @@
 
 {% block body %}
 <div class="content" style="background-color: rgb(251, 245, 245); width: 800px; position: absolute; top: 95px; left: 17%; bottom: 0;">
-    <!-- Your content goes here -->
+    <div class="content">
+        <h1>Posts</h1>
+        <!-- Separate "Create Post" form -->
+        <form method="post" action="{% url 'create_post' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Create Post</button>
+        </form>
+        <br>
+        
+        <!-- Link to display all posts -->
+        <a href="{% url 'display_posts' %}" class="btn btn-secondary">View All Posts</a>
+    </div>
+    
+    <ul>
+        {% for post in posts %}
+            <li>
+                <strong>{{ post.author }}</strong>
+                <p>{{ post.content }}</p>
+                <small>{{ post.created }}</small>
+            </li>
+            <br>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}
 

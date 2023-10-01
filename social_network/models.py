@@ -48,3 +48,11 @@ class User(AbstractUser):
     
     def get_bio(self):
         return self.bio
+    
+class Post(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField(max_length=500)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.author} - {self.created}"

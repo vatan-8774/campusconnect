@@ -44,6 +44,13 @@ urlpatterns = [
 
     path("update_profile/", views.update_profile, name="update_profile"),
 
+    # URL for creating a new post
+    path("create_post/", views.create_post, name="create_post"),
+    
+    # URL for displaying posts
+    path("display_posts/", views.display_posts, name="display_posts"),
+
+    path('delete_post/<int:post_id>/', views.delete_post, name='delete_post'),
 
     
 ]

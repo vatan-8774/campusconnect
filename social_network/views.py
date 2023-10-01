@@ -13,6 +13,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 import datetime
 import logging
+from django.contrib.auth.models import User
+from django.http import Http404
+from .models import Post
+from .forms import PostForm
 from django.db.models import F
 from django.contrib import messages
 from .models import User
@@ -23,15 +27,17 @@ from django.http import HttpResponseServerError
 def index(request):
     show_signup_content = not request.user.is_authenticated
 
+    # Fetch posts to display on the index page
+    posts = Post.objects.all().order_by('-created')
+
     if request.method == "POST":
         # Handle user signup
         # ...
 
-        # Log the user in after signup
-        login(request, user)
+       
         show_signup_content = False  # After signup, don't show signup content
 
-    return render(request, 'social_network/index.html', {'show_signup_content': show_signup_content})
+    return render(request, 'social_network/index.html', {'show_signup_content': show_signup_content, 'posts': posts})
 
 
 
@@ -85,7 +91,7 @@ def update_profile_photo(request):
                 messages.error(request, "No profile photo provided.")
         except Exception as e:
             # Log the error for debugging
-            logger.error(f"Error updating profile photo: {e}")
+            
             messages.error(request, "An error occurred while updating the profile photo.")
     
     # Redirect back to the profile page even on error
@@ -105,6 +111,22 @@ def remove_profile_photo(request):
     return redirect("my_profile")
 
 
+
+@login_required(login_url='login')
+def delete_post(request, post_id):
+    try:
+        post = Post.objects.get(id=post_id)
+        if post.author == request.user:
+            post.delete()
+            # Redirect back to the profile page or any desired page
+            return redirect('my_profile')
+        else:
+            # If the user is not the author of the post, raise a 404 error
+            raise Http404("You do not have permission to delete this post.")
+    except Post.DoesNotExist:
+        raise Http404("Post does not exist.")
+    
+    
 
 @login_required
 def update_profile(request):
@@ -175,6 +197,26 @@ def update_bio(request):
     return HttpResponseServerError("Invalid request.")  # You can customize this error message
 
 
+@login_required(login_url='login')
+def create_post(request):
+    user = request.user
+    
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = user
+            post.save()
+    
+    return redirect('display_posts')  # Redirect to the display_posts view
+
+@login_required(login_url='login')
+def display_posts(request):
+    user = request.user
+    posts = Post.objects.filter(author=user).order_by('-created')
+    form = PostForm()
+    
+    return render(request, 'social_network/my_profile.html', {'form': form, 'posts': posts})
 
 def discover(request):
     return render(request, 'social_network/discover.html')

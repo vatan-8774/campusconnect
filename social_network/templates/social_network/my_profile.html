@@ -140,11 +140,12 @@
         <!-- Link to display all posts -->
         <a href="{% url 'display_posts' %}" class="btn btn-secondary">View All Posts</a>
     </div>
-    
+    <br>
     <ul>
         {% for post in posts %}
-            <li style="max-width: 70%;">
-                <strong>{{ post.author }}</strong>
+            <img src="{{ post.author.profile_photo.url }}" alt="{{ post.author.username }} Profile Picture" class="profile-picture">
+            <strong>@{{ post.author }}</strong>     
+            <li style="max-width: 70%;">    
                 <p>{{ post.content }}</p>
                 <small>{{ post.created }}</small>
                 {% if post.author == user %}
@@ -156,6 +157,14 @@
             </li>
             <br>
         {% endfor %}
+        <style>/* Style the smaller profile picture */
+            .profile-picture{
+                width: 2rem; /* Adjust the size as needed */
+                height: 2.5rem; /* Adjust the size as needed */
+                border-radius: 50%;
+                margin-right: 10px;
+            }
+            </style>
     </ul>
     
     

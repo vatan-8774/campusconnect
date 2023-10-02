@@ -70,6 +70,20 @@ def my_profile(request):
     return render(request, 'social_network/my_profile.html')
 
 
+@login_required
+def user_profile(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        raise Http404("User does not exist.")
+
+    return render(request, 'social_network/user_profile.html', {'user': user})
+
+
+
+
+
+
 
 @login_required
 def update_profile_photo(request):
@@ -210,6 +224,8 @@ def create_post(request):
     
     return redirect('display_posts')  # Redirect to the display_posts view
 
+
+
 @login_required(login_url='login')
 def display_posts(request):
     user = request.user
@@ -286,3 +302,19 @@ def signup(request):
         })
     else:
         return render(request, "social_network/signup.html", {'csrf_token': csrf.get_token(request)})
+
+
+
+def discover(request):
+    # Retrieve all users
+    all_users = User.objects.all()  # Replace with your custom user profile model if needed
+    return render(request, 'social_network/discover.html', {'all_users': all_users})
+
+
+def user_posts(request, username):
+    try:
+        user = User.objects.get(username=username)
+        posts = Post.objects.filter(author=user).order_by('-created')
+        return render(request, 'social_network/user_profile.html', {'user': user, 'posts': posts})
+    except User.DoesNotExist:
+        raise Http404("User does not exist.")

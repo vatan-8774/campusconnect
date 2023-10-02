@@ -6,7 +6,7 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['content']
-        content = forms.CharField(widget=forms.Textarea(attrs={'rows': 4}))  # Adjust attributes as needed
+        content = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}))  # Adjust attributes as needed
 
 
 

@@ -13,6 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 import datetime
 import logging
+import random
 from django.contrib.auth.models import User
 from django.http import Http404
 from .models import Post
@@ -307,7 +308,9 @@ def signup(request):
 
 def discover(request):
     # Retrieve all users
-    all_users = User.objects.all()  # Replace with your custom user profile model if needed
+    all_users = list(User.objects.all() ) # Replace with your custom user profile model if needed
+    # Shuffle the list to randomize the order
+    random.shuffle(all_users)
     return render(request, 'social_network/discover.html', {'all_users': all_users})
 
 

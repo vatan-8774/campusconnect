@@ -60,5 +60,8 @@ urlpatterns = [
 
     path('follow_user/', views.follow_user, name='follow_user'),
 
+    path('<str:username>/followers/', views.followers, name='followers'),
+    
+    path('<str:username>/followings/', views.followings, name='followings'),
 
 ]

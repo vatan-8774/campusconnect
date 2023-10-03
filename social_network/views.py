@@ -2,7 +2,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.hashers import check_password
 from django.urls import reverse
 from django.shortcuts import redirect
@@ -360,3 +360,14 @@ def user_posts(request, username):
         return render(request, 'social_network/user_profile.html', {'user': user, 'posts': posts})
     except User.DoesNotExist:
         raise Http404("User does not exist.")
+    
+
+def followers(request, username):
+    user = get_object_or_404(User, username=username)
+    followers = user.followers.all()
+    return render(request, 'social_network/followers.html', {'user': user, 'followers': followers})
+
+def followings(request, username):
+    user = get_object_or_404(User, username=username)
+    followings = user.following.all()
+    return render(request, 'social_network/followings.html', {'user': user, 'followings': followings})

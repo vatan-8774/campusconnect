@@ -78,13 +78,15 @@
                     </div>
                     <div class="following-followers">
                         <div class="followers">
-                            <strong style="color: rgb(71, 115, 217);">Followers:</strong> {{ request.user.followers.count }}
+                            <strong style="color: rgb(71, 115, 217);">Followers:</strong>
+                            <a href="{% url 'followers' user.username %}">{{ user.followers.count }}</a>
                         </div>
                         <div class="following">
-                            <strong style="color: rgb(71, 115, 217);">Following:</strong> {{ request.user.following.count }}
+                            <strong style="color: rgb(71, 115, 217);">Following:</strong>
+                            <a href="{% url 'followings' user.username %}">{{ user.following.count }}</a>
                         </div>
-                        
                     </div>
+                    
                     <br>
                     <!-- Add other form fields here -->
 

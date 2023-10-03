@@ -13,6 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 import datetime
 import logging
+from django.db.models import Q
 import random
 from django.contrib.auth.models import User
 from django.http import Http404
@@ -30,18 +31,18 @@ from django.utils import timezone
 def index(request):
     show_signup_content = not request.user.is_authenticated
 
-    # Fetch posts to display on the index page
-    posts = Post.objects.all().order_by('-created')
+    # Get the posts by the user and the users they follow
+    user = request.user
+    following = user.following.all()
+    posts = Post.objects.filter(Q(author=user) | Q(author__in=following)).order_by('-created')
 
     if request.method == "POST":
         # Handle user signup
         # ...
 
-       
         show_signup_content = False  # After signup, don't show signup content
 
     return render(request, 'social_network/index.html', {'show_signup_content': show_signup_content, 'posts': posts})
-
 
 
 @login_required

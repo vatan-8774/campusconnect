@@ -82,59 +82,11 @@
 
     <div class="content">
         <h1>Posts</h1>
-        <style>
-            /* Style the list to remove bullet points */
-            ul.list-unstyled {
-                list-style: none;
-                padding-left: 0;
-            }
         
-            /* Style each post as a card-like element */
-            .media {
-                background-color: #fff;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                padding: 10px;
-                margin-bottom: 10px;
-                display: flex;
-            }
-        
-            /* Style the profile picture */
-            .profile-picture {
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                margin-right: 10px;
-            }
-        
-            /* Style the post content and author information */
-            .media-body {
-                flex: 1;
-            }
-        
-            /* Style the delete button */
-            .btn-delete {
-                background-color: #ff4f4f;
-                color: #fff;
-                border: none;
-                border-radius: 5px;
-                padding: 5px 10px;
-                cursor: pointer;
-            }
-        
-            .btn-delete:hover {
-                background-color: #ff1f1f;
-            }
-        
-            /* Add a subtle shadow to the card */
-            .media:hover {
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-            }
-        </style>
         
         <ul class="list-unstyled">
             {% for post in posts %}
-            <li class="media" style="max-width: 70%;">
+            <li class="media" style="max-width: 65%;">
                 <img src="{{ post.author.profile_photo.url }}" alt="{{ post.author.username }} Profile Picture" class="profile-picture">
                 <div class="media-body">
                     <strong>@{{ post.author }}</strong>

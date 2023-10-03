@@ -23,6 +23,8 @@ from django.contrib import messages
 from .models import User
 from datetime import datetime
 from django.http import HttpResponseServerError
+from django.utils import timezone
+
 
 @login_required
 def index(request):
@@ -241,7 +243,7 @@ def discover(request):
 def settings(request):
     return render(request, 'social_network/settings.html')
 
-
+@csrf_exempt
 def login_view(request):
 
     if request.method == "POST":

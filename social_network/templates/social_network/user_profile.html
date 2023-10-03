@@ -55,17 +55,32 @@
                         <label for="year-of-study">Year</label>
                         <input type="text" id="year-of-study" name="year-of-study" value="{{ user.year_of_study }}" disabled>
                     </div>
+                    
+                    
                     <div class="following-followers">
-                        <div class="following">
-                            <strong style="color: rgb(71, 115, 217);">Following:</strong> 100
-                        </div>
                         <div class="followers">
-                            <strong style="color: rgb(71, 115, 217);">Followers:</strong> 200
+                            <strong style="color: rgb(71, 115, 217);">Followers:</strong> {{ user.followers.count }}
                         </div>
+                        <div class="following">
+                            <strong style="color: rgb(71, 115, 217);">Following:</strong> {{ user.following.count }}
+                        </div>
+                        
                     </div>
+                    
                     
 
                     <!-- Add other form fields here -->
+                </form>
+                <form method="post" action="{% url 'follow_user' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_to_follow" value="{{ user.id }}">
+                    {% if user != request.user %}
+                        {% if user in request.user.following.all %}
+                            <button type="submit" class="btn btn-danger">Unfollow</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-primary">Follow</button>
+                        {% endif %}
+                    {% endif %}
                 </form>
                 <br>
                 <div class="card bg-light" style="max-width: 50%;">

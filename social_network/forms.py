@@ -9,6 +9,8 @@ class PostForm(forms.ModelForm):
         content = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}))  # Adjust attributes as needed
 
 
+class FollowForm(forms.Form):
+    user_to_follow = forms.IntegerField(widget=forms.HiddenInput)
 
 
 class ProfilePhotoForm(forms.ModelForm):

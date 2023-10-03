@@ -77,12 +77,13 @@
                         <input type="text" id="year-of-study" name="year-of-study" value="{{ user.year_of_study }}" disabled>
                     </div>
                     <div class="following-followers">
-                        <div class="following">
-                            <strong style="color: rgb(71, 115, 217);">Following:</strong> 100
-                        </div>
                         <div class="followers">
-                            <strong style="color: rgb(71, 115, 217);">Followers:</strong> 200
+                            <strong style="color: rgb(71, 115, 217);">Followers:</strong> {{ request.user.followers.count }}
                         </div>
+                        <div class="following">
+                            <strong style="color: rgb(71, 115, 217);">Following:</strong> {{ request.user.following.count }}
+                        </div>
+                        
                     </div>
                     <br>
                     <!-- Add other form fields here -->

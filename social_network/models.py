@@ -3,6 +3,7 @@ from django.db import models
 from django import forms
 import datetime
 from django.utils import timezone
+from django.dispatch import receiver
 
 
 class User(AbstractUser):
@@ -28,6 +29,7 @@ class User(AbstractUser):
     department = models.CharField(max_length=50, blank=True)
     year_of_study = models.CharField(max_length=10, null=True, blank=True)
     bio = models.TextField(blank=True)
+    following = models.ManyToManyField('self', blank=True, symmetrical=False, related_name='followers')
 
     
 

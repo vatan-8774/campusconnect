@@ -17,7 +17,7 @@ import random
 from django.contrib.auth.models import User
 from django.http import Http404
 from .models import Post
-from .forms import PostForm
+from .forms import PostForm , FollowForm
 from django.db.models import F
 from django.contrib import messages
 from .models import User
@@ -47,10 +47,8 @@ def index(request):
 @login_required
 def my_profile(request):
     if request.method == "POST":
-        print(request.POST)
         # Get the current user
         user = request.user
-        
 
         # Update the user fields based on form input, but only if a value is provided
         if request.POST.get("first-name") is not None:
@@ -63,14 +61,18 @@ def my_profile(request):
             user.department = request.POST.get("department")
         if request.POST.get("year-of-study") is not None:
             user.year_of_study = request.POST.get("year-of-study")
-        
-        
-        
 
         # Save the user object
         user.save()
-        return render(request, 'social_network/my_profile.html')
-    return render(request, 'social_network/my_profile.html')
+
+    # Get the following and follower counts for the current user
+    following_count = request.user.following.count()
+    followers_count = request.user.followers.count()
+
+    return render(request, 'social_network/my_profile.html', {
+        'following_count': following_count,
+        'followers_count': followers_count,
+    })
 
 
 @login_required
@@ -84,7 +86,39 @@ def user_profile(request, username):
 
 
 
+@login_required
+def follow_user(request):
+    if request.method == "POST":
+        follow_form = FollowForm(request.POST)
+        if follow_form.is_valid():
+            user_to_follow_id = follow_form.cleaned_data.get('user_to_follow')
+            user_to_follow = User.objects.get(pk=user_to_follow_id)
 
+            if user_to_follow == request.user:
+                # Prevent following oneself
+                raise Http404("Invalid request")
+
+            if user_to_follow in request.user.following.all():
+                # User is already following, so unfollow
+                request.user.following.remove(user_to_follow)
+                user_to_follow.followers.remove(request.user)
+            else:
+                # User is not following, so follow
+                request.user.following.add(user_to_follow)
+                user_to_follow.followers.add(request.user)
+
+            # Update the following and follower counts
+            request.user.save()
+            user_to_follow.save()
+
+            # Render the user_profile page of the user they followed or unfollowed
+            return render(request, 'social_network/user_profile.html', {
+                'user': user_to_follow,
+                'follow_form': follow_form,
+            })
+
+    # Handle other cases or errors here if needed
+    raise Http404("Invalid request")
 
 
 
@@ -186,6 +220,9 @@ def update_profile(request):
 
     # Handle other cases or return an error response if needed
     return HttpResponseServerError("Invalid request.")  # You can customize this error message
+
+
+
 
 
 @login_required

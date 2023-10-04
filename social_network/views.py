@@ -17,8 +17,9 @@ from django.db.models import Q
 import random
 from django.contrib.auth.models import User
 from django.http import Http404
-from .models import Post
-from .forms import PostForm , FollowForm
+from .models import Post , Comment
+from .forms import PostForm , FollowForm , CommentForm
+
 from django.db.models import F
 from django.contrib import messages
 from .models import User
@@ -50,6 +51,8 @@ def my_profile(request):
     if request.method == "POST":
         # Get the current user
         user = request.user
+
+        
 
         # Update the user fields based on form input, but only if a value is provided
         if request.POST.get("first-name") is not None:
@@ -84,6 +87,60 @@ def user_profile(request, username):
         raise Http404("User does not exist.")
 
     return render(request, 'social_network/user_profile.html', {'user': user})
+
+
+
+
+def create_comment(request, post_id):
+    # Retrieve the post object using the post_id
+    post = get_object_or_404(Post, pk=post_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user  # Assign the current user as the comment author
+            comment.post = post
+            comment.save()
+
+    # Redirect back to the referring page (the page where the comment was posted)
+    referring_page = request.META.get('HTTP_REFERER')
+    if referring_page:
+        return HttpResponseRedirect(referring_page)
+
+    # If the referring page is not available, you can provide a fallback URL
+    # return HttpResponseRedirect(reverse('fallback_url_name'))
+
+    # Handle other cases or return an error response if needed
+    return HttpResponseServerError("Invalid request.")
+
+
+
+@login_required
+def delete_comment(request, comment_id):
+    try:
+        comment = Comment.objects.get(id=comment_id)
+
+        # Check if the current user is the author of the comment
+        if comment.user == request.user:
+            comment.delete()
+            messages.success(request, "Comment deleted successfully.")
+        else:
+            messages.error(request, "You do not have permission to delete this comment.")
+
+    except Comment.DoesNotExist:
+        messages.error(request, "Comment does not exist.")
+
+    # Redirect back to the referring page (the page where the comment was deleted from)
+    referring_page = request.META.get('HTTP_REFERER')
+    if referring_page:
+        return HttpResponseRedirect(referring_page)
+
+    # If the referring page is not available, you can provide a fallback URL
+    # return HttpResponseRedirect(reverse('fallback_url_name'))
+
+    # Handle other cases or return an error response if needed
+    return HttpResponseServerError("Invalid request.")
 
 
 

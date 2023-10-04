@@ -64,4 +64,11 @@ urlpatterns = [
     
     path('<str:username>/followings/', views.followings, name='followings'),
 
+    # URL pattern for creating comments on a post
+    path('create_comment/<int:post_id>/', views.create_comment, name='create_comment'),
+
+    # Add this URL pattern for comment deletion
+    path('delete_comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
+
+
 ]

@@ -12,6 +12,36 @@
                         <strong><a href="{% url 'user_profile' post.author.username %}">@{{ post.author }}</a></strong>
                         <p>{{ post.content }}</p>
                         <small class="text-muted">{{ post.created }}</small>
+                        <!-- Display comments for the post -->
+                        <ul class="list-unstyled">
+                            {% for comment in post.comments.all %}
+                            <li class="media">
+                                <img src="{{ comment.user.profile_photo.url }}" alt="{{ comment.user.username }} Profile Picture" class="profile-picture">
+                                <div class="media-body">
+                                    <strong><a href="{% url 'user_profile' comment.user.username %}">@{{ comment.user }}</a></strong>
+                                    <p>{{ comment.text }}</p>
+                                    <small class="text-muted">{{ comment.created }}</small>
+                                    <!-- Add a "Delete" button for the comment -->
+                                    {% if comment.user == user %} {# Check if the comment author is the current user #}
+                                        <form method="post" action="{% url 'delete_comment' comment.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <!-- Comment form for adding new comments -->
+                        <form method="post" action="{% url 'create_comment' post.id %}">
+                            {% csrf_token %}
+                            
+                            <div class="form-group">
+                                <label for="comment_text">Your Comment:</label>
+                                <input type="text" id="comment_text" name="text" class="form-control" placeholder="Write your comment here" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Comment</button>
+                        </form>
                         {% if post.author == user %}
                             <form method="post" action="{% url 'delete_post' post.id %}">
                                 {% csrf_token %}
